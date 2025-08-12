@@ -21,12 +21,16 @@ A fine-tuned BART model for generating concise summaries from longer text inputs
 
 ## 🛠️ Installation
 
-Clone the repository:
-git clone https://github.com/yourusername/bart-text-summarization.git
+1. Clone the repository:
+```bash
+git clone https://github.com/Popsonn/bart-text-summarization.git
 cd bart-text-summarization
+```
 
-Install dependencies:
+2. Install dependencies:
+```bash
 pip install -r requirements.txt
+```
 
 
 ## 📊 Dataset
@@ -39,8 +43,8 @@ This project uses a processed version of the [Women's E-Commerce Clothing Review
 
 The provided `text_summarised.xlsx` file contains:
 
-- `Processed_Text12`: Processed clothing review text (source text for summarization)
-- `Processed_Title9`: Processed review titles/summaries (target summaries)
+- `Processed_Review_Text`: Processed clothing review text (source text for summarization)
+- `Processed_Title`: Processed review titles/summaries (target summaries)
 
 **Dataset Statistics:**
 
@@ -48,52 +52,60 @@ The provided `text_summarised.xlsx` file contains:
 - Text length: Up to 80 tokens (input)
 - Summary length: Up to 12 tokens (target)
 
+### Sample Data
+A sample of 100 randomly selected processed reviews is provided in `random_summaries.csv` to demonstrate the model's output quality and help with evaluation.
+
 ### Using Your Own Data
 
 To use your own dataset, ensure your Excel file contains columns:
 
 | Column Name         | Description                      |
 |---------------------|---------------------------------|
-| Processed_Text12    | Your source text here...         |
-| Processed_Title9    | Target summary                   |
+| Processed_Review_Text  | Your source text here...         |
+| Processed_Title   | Target summary                   |
 
 ## 🔧 Usage
 
 ### Quick Start
 
-Use the provided dataset:
+1. Use the provided dataset (pre-processed and ready for training):
+```python
+# The dataset is already included: text_summarised.xlsx
+```
 
-The dataset is already included in the repository
-path = 'data/text_summarised.xlsx' # Update path as needed
-
-
-Or load your own data:
-
-Load your custom data
-import pandas as pd
-df = pd.read_excel('your_custom_data.xlsx')
-
-
-Run the training script:
-
+2. Run the training script:
+```bash
 python train_bart_summarizer.py
+```
 
+### Repository Structure
+```
+bart-text-summarization/
+├── data/
+│   ├── text_summarised.xlsx          # Full processed dataset
+│   └── random_summaries.csv          # Sample results (100 entries)
+├── train_bart_summarizer.py
+├── requirements.txt
+└── README.md
+```
 
 ### Configuration
 
-Key parameters you can modify:
+Key parameters you can modify in the training script:
 
-Training parameters
+```python
+# Training parameters
 num_train_epochs=1
 per_device_train_batch_size=4
 max_input_length=80
 max_output_length=12
 
-Generation parameters
+# Generation parameters
 max_length=12
 min_length=8
 length_penalty=2.0
 num_beams=4
+```
 
 
 ## 📈 Model Training
@@ -108,25 +120,40 @@ The script performs the following steps:
 
 ## 🎯 Results
 
-After training on the clothing reviews dataset, the model generates summaries like:
+After training on the clothing reviews dataset, the model generates concise summaries from longer review text:
 
 | Original Review                                                                                      | Original Summary               | Generated Summary                   |
 |----------------------------------------------------------------------------------------------------|-------------------------------|-----------------------------------|
 | "I love this dress! The fit is perfect and the material is so comfortable. Great for both casual and dressy occasions. Would definitely recommend..." | "Perfect dress, comfortable material" | "Love dress perfect fit comfortable material" |
 
-The model generates a CSV file (`random_summaries.csv`) containing:
+### Output Files
+- The training process generates a new CSV file with your results
+- A sample file (`random_summaries.csv`) is included showing 100 examples with:
+  - Original review text
+  - Original summaries
+  - Generated summaries
 
-- Original review text
-- Original summaries
-- Generated summaries
-
-Use this for evaluation and comparison.
+Use these files for evaluation and comparison of model performance.
 
 ## 🔍 Example Output
 
 - **Original Review:** "This sweater is amazing quality and fits perfectly. The color is exactly as shown and shipping was fast..."
 - **Original Summary:** "Amazing quality sweater"
 - **Generated Summary:** "Sweater amazing quality fits perfectly"
+
+## ⚙️ Hardware Requirements
+
+- **Minimum**: 8GB RAM, CPU-only training (slower)
+- **Recommended**: 16GB+ RAM, NVIDIA GPU with 8GB+ VRAM
+- **GPU Support**: CUDA-compatible GPU for faster training
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📝 License
 
